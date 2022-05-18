@@ -3,7 +3,7 @@ import { Button, TextField, Fab, Stack, Box, Typography } from '@mui/material';
 
 import { DataGrid } from '@mui/x-data-grid';
 import { PATHS } from '../constants';
-import { Add } from '@mui/icons-material';
+import { Add, Delete } from '@mui/icons-material';
 
 const EmployeeList = (props) => {
 
@@ -25,6 +25,9 @@ const EmployeeList = (props) => {
                 <Box component="div"  sx={{ p: 2, display: 'flex', gap: '20px', alignItems: "center"}}>
                     <Fab size="large" color="primary" aria-label="add" href={PATHS.EMPLOYEE_ADD}>
                         <Add />
+                    </Fab>
+                    <Fab size="large" aria-label="delete">
+                        <Delete />
                     </Fab>
                 </Box>
             </Stack>

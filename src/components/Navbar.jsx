@@ -1,13 +1,9 @@
 
 import React, { useState } from "react";
 import { AspectRatio, Mail, Notifications } from "@mui/icons-material";
-import { AppBar, Avatar, Badge, Box, InputBase, Menu, MenuItem, Stack, styled, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Badge, Box, Drawer, IconButton, InputBase, Menu, MenuItem, styled, Toolbar, Typography } from "@mui/material";
 import { RESPONSIVE } from "../constants";
-
-const Styledtoolbar = styled(Toolbar)({
-    display: "flex",
-    justifyContent: "space-between"
-});
+import Sidebar from "./Sidebar";
 
 const Searchbar = styled("div")(({ theme }) => ({
     backgroundColor: "white",
@@ -25,6 +21,7 @@ const Icons = styled(Box)(({ theme }) => ({
     }
 }));
 
+
 const Userbox = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
@@ -36,29 +33,47 @@ const Userbox = styled(Box)(({ theme }) => ({
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
+    
     return (
         <AppBar position="sticky">
-            <Styledtoolbar>
-                <Stack direction="row" spacing={1} justifyContent="space-between" alignItems="center">
-                    <AspectRatio />
+            <Toolbar sx={{ display: 'flex', justifyContent: "space-between" }}>
+
+                <Box component="div" sx={{ display: 'flex', alignItems: 'center' }}>
+                    <IconButton sx={RESPONSIVE.SHOW_SM} onClick={() => setOpenDrawer(!openDrawer)} color="inherit">
+                        <AspectRatio onClick={() => setOpenDrawer(!openDrawer)} sx={RESPONSIVE.SHOW_SM} />
+                    </IconButton>
+                    <IconButton sx={RESPONSIVE.HIDE_SM} color="inherit" href="/#">
+                        <AspectRatio sx={RESPONSIVE.HIDE_SM} />
+                    </IconButton>
                     <Typography variant="h6" sx={RESPONSIVE.HIDE_SM}>GrowDNA</Typography>
-                </Stack>
+                </Box>
+
                 <Searchbar><InputBase placeholder="Search..." /></Searchbar>
+
                 <Icons>
-                    <Badge badgeContent={4} color="error">
-                        <Mail />
-                    </Badge>
-                    <Badge badgeContent={2} color="error">
-                        <Notifications />
-                    </Badge>
-                    <Avatar sx={{ width: 30, height: 30 }} onClick={e => setOpen(true)} />
+                    <IconButton color="inherit">
+                        <Badge badgeContent={4} color="error">
+                            <Mail />
+                        </Badge>
+                    </IconButton>
+                    <IconButton color="inherit">
+                        <Badge badgeContent={2} color="error">
+                            <Notifications />
+                        </Badge>
+                    </IconButton>
+                    <IconButton color="inherit">
+                        <Avatar sx={{ width: 30, height: 30 }} onClick={e => setOpen(true)} />
+                    </IconButton>
                 </Icons>
+
                 <Userbox onClick={e => setOpen(true)}>
-                    <Avatar sx={{ width: 30, height: 30 }}/>
+                    <IconButton color="inherit">
+                        <Avatar sx={{ width: 30, height: 30 }} />
+                    </IconButton>
                 </Userbox>
-                <Menu
-                    open={open}
-                    onClose={e => setOpen(false)}
+
+                <Menu open={open} onClose={e => setOpen(false)}
                     anchorOrigin={{
                         vertical: 'top',
                         horizontal: 'right',
@@ -70,7 +85,10 @@ const Navbar = () => {
                     <MenuItem>Profile</MenuItem>
                     <MenuItem>Logout</MenuItem>
                 </Menu>
-            </Styledtoolbar>
+            </Toolbar>
+            <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+                <Sidebar />
+            </Drawer>
         </AppBar>
     )
 }

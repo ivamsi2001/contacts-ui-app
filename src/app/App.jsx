@@ -4,13 +4,16 @@ import { Box, Stack } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { PATHS, RESPONSIVE } from "../constants";
+
+import Home from "../home/Home";
 import AddEmployee from "../employees/AddEmployee";
 import EmployeeList from "../employees/EmployeeList";
-import './App.css';
-import { PATHS } from "../constants";
 import AddDept from "../departments/AddDept";
 import DeptList from "../departments/DeptList";
-import Home from "../home/Home";
+
+import './App.css';
 
 const App = () => {
     const LOCAL_STORAGE_EMP_KEY = 'employees';
@@ -19,12 +22,12 @@ const App = () => {
     const [departments, setDepartments] = useState([]);
     const [employees, setEmployees] = useState([]);
 
-    const addEmployee = (employee) => {
-        setEmployees([...employees, employee]);
-    };
-
     const addDept = (dept) => {
         setDepartments([...departments, dept]);
+    };
+
+    const addEmployee = (employee) => {
+        setEmployees([...employees, employee]);
     };
 
     useEffect(() => {
@@ -51,15 +54,17 @@ const App = () => {
         <Box>
             <Navbar />
             <Stack direction="row" spacing={1} justifyContent="space-between">
-                <Sidebar />
+                <Box flex="0.5" p={1} sx={RESPONSIVE.HIDE_SM}>
+                    <Sidebar />
+                </Box>
                 <Box id="main" flex="4" p={1}>
                     <BrowserRouter>
                         <Routes>
-                            <Route path={PATHS.EMPLOYEES} exact element={<EmployeeList employees={employees} />} />
-                            <Route path={PATHS.EMPLOYEE_ADD} exact element={<AddEmployee addEmployee={addEmployee} />} />
-                            <Route path={PATHS.DEPARTMENTS} exact element={<DeptList departments={departments} />} />
-                            <Route path={PATHS.DEPARTMENT_ADD} exact element={<AddDept addDept={addDept} />} />
-                            <Route path="/" exact element={<Home/>} />
+                            <Route path={PATHS.EMPLOYEES} element={<EmployeeList employees={employees} />} />
+                            <Route path={PATHS.EMPLOYEE_ADD} element={<AddEmployee addEmployee={addEmployee} />} />
+                            <Route path={PATHS.DEPARTMENTS} element={<DeptList departments={departments} />} />
+                            <Route path={PATHS.DEPARTMENT_ADD} element={<AddDept addDept={addDept} />} />
+                            <Route path="/" element={<Home />} />
                         </Routes>
                     </BrowserRouter>
                 </Box>

@@ -41,7 +41,7 @@ const AddEmployee = (props) => {
                 <TextField id="email" label="Email" variant="outlined"
                     value={email} size='large'
                     onChange={(e) => { setEmail(e.target.value) }} />
-                <Box sx={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', gap: '40px', justifyContent:"center" }}>
                     <Button variant="contained" onClick={add} sx={{ width: '30%' }}>Add</Button>
                     <Button variant="outlined" onClick={cancel} sx={{ width: '30%' }}>Cancel</Button>
                 </Box>
